@@ -3,18 +3,10 @@
     <div class="main-header level is-mobile">
       <div class="level-left">
         <div class="level-item alt-button" @click="toggleSidebar(true)">
-          <b-icon
-            v-show="!sidebar.hide"
-            icon="grip-lines"
-          >
-          </b-icon>
+          <b-icon v-show="!sidebar.hide" icon="grip-lines"> </b-icon>
         </div>
         <div class="level-item alt-button" @click="toggleSidebar()">
-          <b-icon
-            v-show="sidebar.hide"
-            icon="grip-lines-vertical"
-          >
-          </b-icon>
+          <b-icon v-show="sidebar.hide" icon="grip-lines-vertical"> </b-icon>
         </div>
         <div class="level-item alt-button" v-if="!options.hideCreate">
           <div @click="newNote()">
@@ -23,16 +15,17 @@
             </b-tooltip>
           </div>
         </div>
-        <div class="level-item alt-button" v-if="sidebar.tasks.length">
+        <Tasks :tasks="this.taskList"></Tasks>
+        <!-- <div class="level-item alt-button" v-if="this.taskList.length">
           <b-dropdown aria-role="list">
             <b-tooltip label="Tasks" position="is-bottom" slot="trigger" role="button">
               <b-icon icon="tasks"></b-icon>
             </b-tooltip>
-            <b-dropdown-item custom v-for="task of sidebar.tasks" v-bind:key="task.uuid">
+            <b-dropdown-item custom v-for="task of this.taskList" v-bind:key="task.uuid">
               <SimpleTask :task="task"></SimpleTask>
             </b-dropdown-item>
           </b-dropdown>
-        </div>
+        </div> -->
         <div class="level-item alt-button">
           <div @click="goToSearch()">
             <b-tooltip label="Search notes" position="is-bottom">
@@ -83,10 +76,14 @@
                 v-model="sidebar.autoSave"
                 @input="sidebar.toggleAutoSave"
               >
-                {{ sidebar.autoSave ? 'Disable Auto-Save' : 'Enable Auto-Save' }}
+                {{
+                  sidebar.autoSave ? "Disable Auto-Save" : "Enable Auto-Save"
+                }}
               </b-switch>
             </b-dropdown-item>
-            <b-dropdown-item @click="exportNotes()">Export Notes</b-dropdown-item>
+            <b-dropdown-item @click="exportNotes()"
+              >Export Notes</b-dropdown-item
+            >
             <b-dropdown-item @click="logout()">Logout</b-dropdown-item>
           </b-dropdown>
         </div>
@@ -96,31 +93,35 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import _ from 'lodash';
-import addDays from 'date-fns/addDays';
-import subDays from 'date-fns/subDays'
-import format from 'date-fns/format';
+import Vue from "vue";
+import Component from "vue-class-component";
+import _ from "lodash";
+import addDays from "date-fns/addDays";
+import subDays from "date-fns/subDays";
+import format from "date-fns/format";
 
-import SidebarInst from '../services/sidebar';
-import {clearToken} from '../services/user';
-import {NoteService} from '../services/notes';
+import SidebarInst from "../services/sidebar";
+import { clearToken } from "../services/user";
+import { NoteService } from "../services/notes";
 
-import {IHeaderOptions} from '../interfaces';
+import { IHeaderOptions } from "../interfaces";
 
-import SimpleTask from './SimpleTask.vue';
+import Tasks from "./Tasks.vue";
 
 @Component({
   components: {
-    SimpleTask,
+    Tasks,
   },
   props: {
     options: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+    taskList: {
+      type: Array,
+      required: true,
+    },
+  },
 })
 export default class Header extends Vue {
   public sidebar = SidebarInst;
@@ -132,11 +133,11 @@ export default class Header extends Vue {
   }
 
   public newNote() {
-    this.$router.push({name: 'new-note'}).catch(err => {});
+    this.$router.push({ name: "new-note" }).catch((err) => {});
   }
 
   public goToSearch(searchType: string, tag: string) {
-    this.$router.push({name: 'search'}).catch(err => {});
+    this.$router.push({ name: "search" }).catch((err) => {});
   }
 
   public prevent($event: any) {
@@ -145,12 +146,18 @@ export default class Header extends Vue {
 
   public prevDay() {
     const date = subDays(this.sidebar.date, 1);
-    this.$router.push({ name: 'day-id', params: { id: format(date, 'MM-dd-yyyy') } });
+    this.$router.push({
+      name: "day-id",
+      params: { id: format(date, "MM-dd-yyyy") },
+    });
   }
 
   public nextDay() {
     const date = addDays(this.sidebar.date, 1);
-    this.$router.push({ name: 'day-id', params: { id: format(date, 'MM-dd-yyyy') } });
+    this.$router.push({
+      name: "day-id",
+      params: { id: format(date, "MM-dd-yyyy") },
+    });
   }
 
   public async save() {
@@ -167,7 +174,7 @@ export default class Header extends Vue {
 
     try {
       await this.options.saveFn();
-    } catch(e) {}
+    } catch (e) {}
 
     this.isSaving = false;
   }
@@ -186,7 +193,7 @@ export default class Header extends Vue {
 
     try {
       await this.options.deleteFn();
-    } catch(e) {}
+    } catch (e) {}
 
     this.isSaving = false;
   }
@@ -197,7 +204,7 @@ export default class Header extends Vue {
 
   public logout() {
     clearToken();
-    this.$router.push({name: 'Login'});
+    this.$router.push({ name: "Login" });
   }
 }
 </script>

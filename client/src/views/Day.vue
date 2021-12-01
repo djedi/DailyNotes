@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :options="headerOptions"></Header>
+    <Header :options="headerOptions" :task-list="tasks"></Header>
     <Editor v-if="!isLoading" v-bind:value="text" v-on:valChanged="valChanged" v-on:saveShortcut="saveDay"></Editor>
     <div v-else class="loading-wrapper">
       <b-loading :is-full-page="false" :active="isLoading"></b-loading>
@@ -59,6 +59,7 @@ export default class Day extends Vue {
     saveFn: () => this.saveDay(),
     deleteFn: () => this.deleteNote(),
   }
+  public tasks: Array<object> = [];
 
   public metaInfo(): any {
     return {
@@ -239,6 +240,22 @@ export default class Day extends Vue {
       this.title = this.headerOptions.title;
       this.headerOptions.saveDisabled = true;
     }
+
+    // Get task list for today
+    const regex = /\s+?- \[( |x)\] (.+)/gm;
+    let m;
+    let completed = false;
+    this.tasks = [];
+    while ((m = regex.exec(data)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+      }
+
+      completed = m[1] === "x";
+      this.tasks.push({ completed, name: m[2] });
+    }
+    console.log(this.tasks);
   }
 
   public autoSaveThrottle = _.debounce(() => this.saveDay(), 3000, {
