@@ -1,6 +1,6 @@
 <template>
   <div class="field">
-    <b-checkbox v-model="completed" @input="updateTask">
+    <b-checkbox v-model="task.completed" @input="updateTask">
       {{ this.task.name }}
     </b-checkbox>
   </div>
@@ -9,6 +9,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Inject } from "vue-property-decorator";
 
 import SidebarInst from "../services/sidebar";
 
@@ -17,20 +18,24 @@ import SidebarInst from "../services/sidebar";
     task: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
   }
 })
 export default class TaskItem extends Vue {
   public task: any;
+  public index: any;
   public sidebar = SidebarInst;
   public completed: Boolean = false;
 
-  mounted() {
-    this.completed = this.task.completed;
-  }
+  @Inject()
+  public global: any;
 
   public async updateTask() {
-    this.task.completed = this.completed;
+    this.global.taskList.splice(this.index, 1, this.task);
   }
 }
 </script>

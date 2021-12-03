@@ -95,8 +95,8 @@ export default class Editor extends Vue {
   generateTaskList() {
     // Get task list for today
     const data = this.editor.getValue();
-    const regex = /\s+?- \[( |x)\] (.+)/gm;
-    let m;
+    const regex = /- \[( |x)\] (.+)/gm;
+    let m: any;
     let completed = false;
     this.global.taskList.splice(0)
     while ((m = regex.exec(data)) !== null) {
@@ -107,8 +107,6 @@ export default class Editor extends Vue {
       completed = m[1] === "x";
       this.global.taskList.push({ completed, name: m[2], index: m['index'] });
     }
-    console.log(this.global.taskList);
-    this.global.taskTrigger += 1;
   }
 
   created() {
@@ -164,6 +162,19 @@ export default class Editor extends Vue {
 
       this.editor.setCursor(cursor);
     });
+  }
+
+  @Watch('global.taskList')
+  onTaskListChanged() {
+    const data = this.editor.getValue();
+    let newData = data
+    this.global.taskList.forEach((task: any) => {
+      let c = task.completed ? 'x' : ' ';
+      newData = newData.substr(0, task.index + 3) + c + newData.substr(task.index + 4);
+    })
+    if (newData !== data) {
+      this.editor.setValue(newData);
+    }
   }
 }
 </script>

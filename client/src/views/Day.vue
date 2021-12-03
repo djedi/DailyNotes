@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :options="headerOptions" :task-list="tasks"></Header>
+    <Header :options="headerOptions"></Header>
     <Editor v-if="!isLoading" v-bind:value="text" v-on:valChanged="valChanged" v-on:saveShortcut="saveDay"></Editor>
     <div v-else class="loading-wrapper">
       <b-loading :is-full-page="false" :active="isLoading"></b-loading>
@@ -59,7 +59,6 @@ export default class Day extends Vue {
     saveFn: () => this.saveDay(),
     deleteFn: () => this.deleteNote(),
   }
-  public tasks: Array<object> = [];
 
   public metaInfo(): any {
     return {

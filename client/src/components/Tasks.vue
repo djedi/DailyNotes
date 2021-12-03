@@ -9,8 +9,12 @@
       >
         <b-icon icon="tasks"></b-icon>
       </b-tooltip>
-      <b-dropdown-item custom v-for="task in global.taskList" :key="task.index">
-        <task-item :task="task"></task-item>
+      <b-dropdown-item
+        custom
+        v-for="(task, idx) in global.taskList"
+        :key="task.index"
+      >
+        <task-item :task="task" :index="idx"></task-item>
       </b-dropdown-item>
       <div class="no-tasks" v-if="!global.taskList.length">No tasks found</div>
     </b-dropdown>
