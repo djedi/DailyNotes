@@ -16,9 +16,9 @@ import SidebarInst from "../services/sidebar";
   props: {
     task: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 })
 export default class TaskItem extends Vue {
   public task: any;

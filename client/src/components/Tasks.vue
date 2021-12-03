@@ -9,32 +9,26 @@
       >
         <b-icon icon="tasks"></b-icon>
       </b-tooltip>
-      <b-dropdown-item custom v-for="task of tasks" v-bind:key="task.uuid">
+      <b-dropdown-item custom v-for="task in global.taskList" :key="task.index">
         <task-item :task="task"></task-item>
       </b-dropdown-item>
-      <div class="no-tasks" v-if="!tasks.length">No tasks found</div>
+      <div class="no-tasks" v-if="!global.taskList.length">No tasks found</div>
     </b-dropdown>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Vue, Component, Inject, Watch } from "vue-property-decorator";
 import _ from "lodash";
 
 import TaskItem from "./TaskItem.vue";
 
 @Component({
-  components: { TaskItem },
-  props: {
-    tasks: {
-      type: Array,
-      required: true,
-    },
-  },
+  components: { TaskItem }
 })
 export default class Tasks extends Vue {
-  public tasks: Array<object> = [];
+  @Inject()
+  public global: any;
 }
 </script>
 
