@@ -30,7 +30,7 @@
     "@replit/codemirror-vim": "^6.3.0",
     "@types/marked": "^6.0.0",
     "@unhead/vue": "^2.0.19",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "buefy": "^3.0.3",
     "bulma": "^1.0.4",
     "bulmaswatch": "^0.8.1",
