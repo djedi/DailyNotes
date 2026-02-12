@@ -36,7 +36,7 @@
     "bulmaswatch": "^0.8.1",
     "codemirror": "^6.0.2",
     "date-fns": "^4.1.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "marked": "^17.0.1",
     "mermaid": "^11.12.2",
     "mitt": "^3.0.1",
