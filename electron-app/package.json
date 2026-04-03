@@ -6,7 +6,7 @@
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
-    "electron": "^35.7.5",
+    "electron": "^39.8.4",
     "electron-builder": "^26.6.0"
   },
   "overrides": {
