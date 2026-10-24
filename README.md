@@ -570,6 +570,21 @@ services:
 - The `./dailynotes-data` directory will store your database and configuration
 - The default port is now `8000` for better compatibility
 
+#### Unraid
+
+An up-to-date Unraid template lives at [`unraid/dailynotes.xml`](unraid/dailynotes.xml). It uses the `xhenxhe/dailynotes` image on port `8000`. Older Community Applications templates that point to `m0ngr31/dailynotes` or port `5000` are outdated and no longer receive updates.
+
+To install it, open a terminal on your Unraid server and run:
+
+```bash
+wget -O /boot/config/plugins/dockerMan/templates-user/my-DailyNotes.xml \
+  https://raw.githubusercontent.com/djedi/DailyNotes/master/unraid/dailynotes.xml
+```
+
+Then go to **Docker → Add Container** and select **DailyNotes** from the template dropdown. Leave `API_SECRET_KEY` and `DB_ENCRYPTION_KEY` blank to have them generated and stored in the appdata folder.
+
+If you're moving from the old template, keep the same appdata path mapped to `/app/config` and change the repository to `xhenxhe/dailynotes:latest` and the port to `8000`. Your existing database and keys will carry over.
+
 ### Reverse Proxy
 
 If you're running DailyNotes behind a reverse proxy, here are example configurations for popular web servers.

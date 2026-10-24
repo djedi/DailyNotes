@@ -16,19 +16,19 @@ class Config(object):
     EXPORT_FILE = os.path.join(basedir, "config", "export.zip")
     UPLOAD_FOLDER = os.path.join(basedir, "config", "uploads")
     MAX_UPLOAD_SIZE = int(
-        os.environ.get("MAX_UPLOAD_SIZE", 10 * 1024 * 1024)
+        os.environ.get("MAX_UPLOAD_SIZE") or 10 * 1024 * 1024
     )  # 10MB default
     ALLOWED_UPLOAD_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
-    DEFAULT_TIMEZONE = os.environ.get("DEFAULT_TIMEZONE", None)
+    DEFAULT_TIMEZONE = os.environ.get("DEFAULT_TIMEZONE") or None
 
     # SMTP Configuration for password reset and magic link emails
     SMTP_HOST = os.environ.get("SMTP_HOST")
-    SMTP_PORT = int(os.environ.get("SMTP_PORT", 587))
+    SMTP_PORT = int(os.environ.get("SMTP_PORT") or 587)
     SMTP_USER = os.environ.get("SMTP_USER")
     SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
-    SMTP_USE_TLS = os.environ.get("SMTP_USE_TLS", "true").lower() == "true"
+    SMTP_USE_TLS = (os.environ.get("SMTP_USE_TLS") or "true").lower() == "true"
     SMTP_FROM_EMAIL = os.environ.get("SMTP_FROM_EMAIL")
-    SMTP_FROM_NAME = os.environ.get("SMTP_FROM_NAME", "DailyNotes")
+    SMTP_FROM_NAME = os.environ.get("SMTP_FROM_NAME") or "DailyNotes"
 
     # Application URL for email links (e.g., password reset, magic link)
-    APP_URL = os.environ.get("APP_URL", "http://localhost:8000")
+    APP_URL = os.environ.get("APP_URL") or "http://localhost:8000"
