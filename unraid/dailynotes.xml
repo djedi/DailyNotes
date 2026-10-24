@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>DailyNotes</Name>
+  <Repository>xhenxhe/dailynotes:latest</Repository>
+  <Registry>https://hub.docker.com/r/xhenxhe/dailynotes</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/djedi/DailyNotes/issues</Support>
+  <Project>https://github.com/djedi/DailyNotes</Project>
+  <Overview>Self-hosted daily task and note-taking app. Markdown with GitHub Flavored Markdown task lists, tags, projects, search, Kanban board, and all notes encrypted at rest.&#xD;
+&#xD;
+API_SECRET_KEY and DB_ENCRYPTION_KEY are generated automatically and stored in the appdata folder if left blank. If you set DB_ENCRYPTION_KEY yourself, never change it afterwards or existing notes can no longer be decrypted.</Overview>
+  <Category>Productivity: Tools:</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/djedi/DailyNotes/master/unraid/dailynotes.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/djedi/DailyNotes/master/client/public/favicon-196x196.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="WebUI Port" Target="8000" Default="8000" Mode="tcp" Description="Port for the DailyNotes web interface." Type="Port" Display="always" Required="true" Mask="false">8000</Config>
+  <Config Name="Config" Target="/app/config" Default="/mnt/user/appdata/dailynotes" Mode="rw" Description="Database (SQLite) and generated keys." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dailynotes</Config>
+  <Config Name="API_SECRET_KEY" Target="API_SECRET_KEY" Default="" Mode="" Description="Signs login tokens. Generated automatically if blank." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="DB_ENCRYPTION_KEY" Target="DB_ENCRYPTION_KEY" Default="" Mode="" Description="Encrypts notes at rest. Generated automatically if blank. WARNING: never change it after first start." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="PREVENT_SIGNUPS" Target="PREVENT_SIGNUPS" Default="" Mode="" Description="Set to any value to disable new user signups." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="DATABASE_URI" Target="DATABASE_URI" Default="" Mode="" Description="Optional PostgreSQL/MySQL connection string. Uses SQLite in /app/config if blank." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="DEFAULT_TIMEZONE" Target="DEFAULT_TIMEZONE" Default="" Mode="" Description="TZ name (e.g. America/Denver) for external ICS calendar events." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="APP_URL" Target="APP_URL" Default="" Mode="" Description="Public URL of this instance, used in email links." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="SMTP_HOST" Target="SMTP_HOST" Default="" Mode="" Description="SMTP server for password reset and magic link emails. Email features disabled if blank." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="SMTP_PORT" Target="SMTP_PORT" Default="587" Mode="" Description="SMTP server port." Type="Variable" Display="advanced" Required="false" Mask="false">587</Config>
+  <Config Name="SMTP_USER" Target="SMTP_USER" Default="" Mode="" Description="SMTP username." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="SMTP_PASSWORD" Target="SMTP_PASSWORD" Default="" Mode="" Description="SMTP password." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="SMTP_USE_TLS" Target="SMTP_USE_TLS" Default="true" Mode="" Description="Use TLS for SMTP (true/false)." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="SMTP_FROM_EMAIL" Target="SMTP_FROM_EMAIL" Default="" Mode="" Description="From address. Defaults to SMTP_USER." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="SMTP_FROM_NAME" Target="SMTP_FROM_NAME" Default="DailyNotes" Mode="" Description="From display name." Type="Variable" Display="advanced" Required="false" Mask="false">DailyNotes</Config>
+</Container>
