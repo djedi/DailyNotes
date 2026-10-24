@@ -23,7 +23,7 @@ python-dateutil==2.9.0.post0
 aiosmtplib==5.1.2  # Async SMTP for email sending
 
 # Development
-black==26.3.1
+black==26.10.1
 pre-commit==4.5.0
 
 # Database drivers (optional - install based on your database choice)
